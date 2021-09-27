@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *next;
+    Node(int d=0): data(d), next(nullptr){}
+};
+
+Node* insert_beginning(Node *head, int val){
+    Node *n = new Node(val);
+    n->next = head;
+    return n;
+}
+
+Node* insert_end(Node *head, int val){
+    Node *n = new Node(val);
+    if(!head) return n;
+    
+    Node *cur = head;
+    while(cur->next){
+        cur = cur->next;
+    }
+    cur->next = n;
+    return head;
+}
+
+Node* insert_after(Node *head, int val, int new_val){
+    Node *n = new Node(new_val);
+    if(!head) return n;
+    
+    Node *cur = head;
+    
+    while((cur->data != val) && (cur->next)){
+        cur = cur->next;
+    }
+    Node *cur_next = cur->next;
+    cur->next = n;
+    n->next = cur_next;
+    return head;
+}
+
+// 1->2->3->NULL
+int main(){
+    Node n1(1), n2(2), n3(3);
+    n1.next = &n2;
+    n2.next = &n3;
+    
+    // print the linked list
+    Node *n = &n1;
+    while(n){
+        cout << n->data << "->";
+        n = n->next;
+    }
+    cout << "NULL\n";
+    
+    // Insert 100 in beginning
+    //Node *new_head = insert_beginning(&n1, 100);
+    //Node *new_head = insert_end(&n1, 100);
+    Node *new_head = insert_after(&n1, 5, 100);
+    
+    // print the linked list
+    n = new_head;
+    while(n){
+        cout << n->data << "->";
+        n = n->next;
+    }
+    cout << "NULL\n";
+    
+}
