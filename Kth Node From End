@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *next;
+    Node(int d=0): data(d), next(nullptr){}
+};
+
+int kth_from_end(Node* head, int k){
+    Node *p = head;
+    Node *c = head;
+    
+    if(head){
+        while(k){
+            if(!c){
+                return -1;
+            }
+            c = c->next;
+            k--;
+        }
+    } else return -1;
+    
+    while(c){
+        c = c->next;
+        p = p->next;
+    }
+    return p->data;
+}
+
+// 1->2->3->4->5->6->NULL
+int main(){
+    Node n1(1), n2(2), n3(3), n4(4), n5(5), n6(6);
+    n1.next = &n2;
+    n2.next = &n3;
+    n3.next = &n4;
+    n4.next = &n5;
+    n5.next = &n6;
+    
+    //TODO: 
+    int val = kth_from_end(&n1, 7);
+    std::cout << val << endl;
+}
