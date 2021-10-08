@@ -23,7 +23,7 @@ int middle_node(Node* head){
 
 // 1->2->3->4->5->6->NULL
 int main(){
-    Node n1(1), n2(2), n3(3), n4(4), n5(5);n6(6);
+    Node n1(1), n2(2), n3(3), n4(4), n5(5), n6(6);
     n1.next = &n2;
     n2.next = &n3;
     n3.next = &n4;
