@@ -1,0 +1,79 @@
+// Implementation of Max Binary Heap in C++
+// Steps are similar to that of Min Heap explained here: https://youtu.be/A9iBOFDfD8Q
+// ------------------------------------------------------------
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class MaxHeap{
+    vector<int> heap;
+    
+    int parent(int i) { return (i-1)/2; }
+    int left(int i) {return (2*i + 1);}
+    int right(int i) {return (2*i + 2);}
+    
+    void heapify(int i){
+        int l = left(i);
+        int r = right(i);
+        int largest = i;
+        if(l < heap.size() && heap[l] > heap[i])
+            largest = l;
+        if(r < heap.size() && heap[r] > heap[largest])
+            largest = r;
+        if(largest != i){
+            std::swap(heap[i], heap[largest]);
+            heapify(largest);
+        }
+    }
+public:
+    int getMax(){ 
+        if(heap.size() == 0)
+            return -1;
+        return heap.front();
+    }
+    
+    void insert(int k){
+        heap.push_back(k);
+        int i = heap.size() - 1;
+        while(i != 0 && heap[parent(i)] < heap[i]){
+            std::swap(heap[i], heap[parent(i)]);
+            i = parent(i);
+        }
+    }
+    
+    void deleteMax(){
+        if(heap.size() == 0){
+            cout << "Heap is empty" << endl;
+            return;
+        }
+        heap[0] = heap.back();
+        heap.pop_back();
+        heapify(0);
+    }
+    
+    int size() {return heap.size();}
+    
+    void printHeap() {
+        for(int i = 0; i < heap.size(); ++i)
+            cout << heap[i] << "\t";
+        cout << endl;
+    }
+    
+};
+
+int main() {
+    MaxHeap H;
+    H.insert(20);
+    H.insert(8);
+    H.insert(5);
+    H.insert(10);
+    H.insert(15);
+    H.insert(12);
+    H.printHeap();
+    cout << "Min = " << H.getMax() << endl;
+    H.deleteMax();
+    H.printHeap();
+    
+    return 0;
+}
